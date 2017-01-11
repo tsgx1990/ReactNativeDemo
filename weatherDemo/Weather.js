@@ -4,8 +4,11 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Image,
 	TextInput,
 } from "react-native";
+
+import MyListView from "./MyListView.js";
 
 export default class Weather extends React.Component {
 
@@ -14,23 +17,41 @@ export default class Weather extends React.Component {
 		this.state = {
 			zip: "欢迎光临",
 		};
+
+		// setInterval(() => {
+		// 	this.setState({
+		// 		zip: "huohuo",
+		// 	});
+		// }, 2000);
 	}
 
 	render() {
+
+		// require("../imgs/test_top.png");
+		let pic = {
+			uri: "https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg",
+		};
+
 		return (
-			<View>
+			<View style={styles.view}>
 
 				<Text style={styles.welcome}>
-					I say: {this.state.zip}
+					I: {this.state.zip}
 				</Text>
-				<TextInput 
+
+				<TextInput  
 				style={styles.input} 
 				onChange={this.handleTextChange.bind(this)} 
-				placeholder="你说啥">
+				placeholder="你说啥好呢！"
+				placeholderTextColor="yellow">
 
 				</TextInput>
-			</View>
 
+				<Image style={styles.image} source={pic} /> 
+
+				<MyListView />
+			
+			</View>
 		);
 	}
 
@@ -43,20 +64,39 @@ export default class Weather extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+	view: {
+		flex: 0,
+		flexDirection: "column",
+		justifyContent: "space-around",
+		alignItems: "center",
+		backgroundColor: "powderblue",
+	},
 	welcome: {
-		fontSize: 25,
+		// flex: 1,
+		fontSize: 20,
+		color: "#F85959",
+		fontWeight: "bold",
 		textAlign: "center",
 		margin: 10,
-		color: "#F85959",
 	},
 	input: {
+		// flex: 2,
 		marginLeft: 0,
 		marginRight: 0,
 		fontSize: 20,
 		borderWidth: 3,
 		borderRadius: 6,
-		borderColor: "#F85959",
-		height: 60,
+		borderColor: "steelblue",
+		height: 40,
 		paddingLeft: 10,
-	}
+	},
+	image: {
+		// flex: 0.5,
+		// marginLeft: 10,
+		// marginTop: 20,
+		width: 40,
+		height: 40,
+		backgroundColor: "#123456",
+	},
 });
