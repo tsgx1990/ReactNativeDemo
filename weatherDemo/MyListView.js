@@ -6,6 +6,7 @@ import {
 	ListView,
 	Text,
 	TextInput,
+	// Dimensions,
 } from "react-native";
 
 class MyListViewCell extends React.Component {
@@ -60,11 +61,12 @@ MyListViewCell.propTypes = {
 
 const cellStyles = StyleSheet.create({
 	container: {
+		flex: 1,
 		backgroundColor: "white",
 	},
 	text: {
 		margin: 6,
-		fontSize: 24,
+		fontSize: 30,
 		backgroundColor: "skyblue",
 	},
 	textInput: {
@@ -95,32 +97,42 @@ export default class MyListView extends React.Component {
 			rowHasChanged: this.rowHasChanged,
 		});
 		this.state = {
-			dataSource: ds.cloneWithRows([
+			ds: ds,
+			data: [
 				"peng", "ming", "hao", "qing",
 				"long qweqweqw afjo asofijwepofjq oasjf",
 				"我的背啊的说法哦", "好爱发 is 发 i 你你", "姐姐哦 i 佛啊嗯的那地方",
 				"欢喜哦生聚光灯我却不能真的我还能幽默掉", "眼泪又怕人看破顾虑好多",
 				"woxianggeguduhuanzheasdfadf",
 				"外向的孤独患者有何不可，大家哦哦额就哦啊传鉴明月光疑是地上霜举头姚明也疑似地上霜 shaun"
-			]),
+			],
 		};
+
+		// this.requestList();
 	}
 
 	render() {
 		return (
-			<View style={listStyles.view}>
-				<ListView
-				style = {listStyles.listView}
-				dataSource = {this.state.dataSource}
-				renderRow = {this.renderRowData.bind(this)} 
-				/>
-			</View>
+			<ListView
+			style = {listStyles.listView}
+			dataSource = {this.state.ds.cloneWithRows(this.state.data)}
+			renderRow = {this.renderRowData.bind(this)} 
+			/>
 		);
+	}
+
+	processedRowData(rowData) {
+		// alert(typeof rowData);
+		if (typeof rowData == "string") {
+			return rowData;
+		} else {
+			return rowData.title + "\n" + rowData.releaseYear;
+		}
 	}
 
 	renderRowData(rowData) {
 		return (
-			<MyListViewCell title={rowData} />
+			<MyListViewCell title={this.processedRowData(rowData)} />
 		);
 	}
 
@@ -130,14 +142,31 @@ export default class MyListView extends React.Component {
 		return r1 !== r2;
 	}
 
+	requestList(urlString) {
+		console.log("requestList...->" + urlString);
+		return fetch(urlString)
+			.then((response) => {
+				console.log("response->" + JSON.stringify(response));
+				return response.json();
+			})
+			.then((responseJson) => {
+				console.log("responseJson->" + JSON.stringify(responseJson));
+				this.setState({
+					data: responseJson.movies,
+				});
+
+			})
+			.catch((error) => {
+				console.log("error->");
+				console.error(error);
+			});
+	}
+
 }
 
+// var winWidth = Dimensions.get("window").width;
+
 const listStyles = StyleSheet.create({
-	view: {
-		width: 240,
-		height: 300,
-		backgroundColor: "orange",
-	},
 	listView: {
 		margin: 10,
 		backgroundColor: "#F85959",

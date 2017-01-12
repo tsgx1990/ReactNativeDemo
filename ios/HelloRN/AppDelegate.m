@@ -21,7 +21,11 @@
   // http://localhost:8081/index.ios.bundle?platform=ios&dev=true&minify=false
 //  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   
+#if TARGET_IPHONE_SIMULATOR
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+#else
   jsCodeLocation = [NSURL URLWithString:@"http://172.25.16.17:8081/index.ios.bundle?platform=ios&dev=true&minify=false"];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"HelloRN"

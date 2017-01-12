@@ -5,6 +5,7 @@ import {
 	View,
 	Text,
 	Image,
+	Button,
 	TextInput,
 } from "react-native";
 
@@ -15,7 +16,7 @@ export default class Weather extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			zip: "欢迎光临",
+			zip: "",
 		};
 
 		// setInterval(() => {
@@ -33,14 +34,15 @@ export default class Weather extends React.Component {
 		};
 
 		return (
-			<View style={styles.view}>
+			<View style={styles.container}>
 
-				<Text style={styles.welcome}>
-					I: {this.state.zip}
+				<Text style={styles.welcomeText}>
+					I say: {this.state.zip}
 				</Text>
 
 				<TextInput  
 				style={styles.input} 
+				ref="textInput"
 				onChange={this.handleTextChange.bind(this)} 
 				placeholder="你说啥好呢！"
 				placeholderTextColor="yellow">
@@ -49,7 +51,14 @@ export default class Weather extends React.Component {
 
 				<Image style={styles.image} source={pic} /> 
 
-				<MyListView />
+				<MyListView ref="myListView"/>
+
+				<Button 
+				style={{backgroundColor: "red"}} 
+				title="刷新"
+				onPress={this.buttonPressed.bind(this)}>
+
+				</Button>
 			
 			</View>
 		);
@@ -61,29 +70,44 @@ export default class Weather extends React.Component {
 			zip: event.nativeEvent.text,
 		});
 	}
+
+	buttonPressed(event) {
+		event; // 消除警告
+		var inputString = this.state.zip;
+		console.log("urlString1->" + inputString);
+		if (inputString.length == 0 || inputString == null || inputString == undefined) {
+			// inputString = "http://172.25.16.17:8000/movies.json";
+			inputString = "http://localhost:8000/movies.json";
+			// inputString = "http://facebook.github.io/react-native/movies.json";
+		}
+
+		console.log("urlString2->" + inputString);
+		this.refs.myListView.requestList(inputString);
+	}
 }
 
 const styles = StyleSheet.create({
 
-	view: {
-		flex: 0,
+	container: {
+		flex: 1,
 		flexDirection: "column",
 		justifyContent: "space-around",
-		alignItems: "center",
+		alignItems: "stretch",
 		backgroundColor: "powderblue",
 	},
-	welcome: {
+	welcomeText: {
 		// flex: 1,
 		fontSize: 20,
 		color: "#F85959",
 		fontWeight: "bold",
-		textAlign: "center",
-		margin: 10,
+		textAlign: "left",
+		margin: 20,
+		backgroundColor: "black",
 	},
 	input: {
 		// flex: 2,
-		marginLeft: 0,
-		marginRight: 0,
+		marginLeft: 10,
+		marginRight: 10,
 		fontSize: 20,
 		borderWidth: 3,
 		borderRadius: 6,
@@ -93,10 +117,10 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		// flex: 0.5,
-		// marginLeft: 10,
-		// marginTop: 20,
+		margin: 10,
 		width: 40,
 		height: 40,
 		backgroundColor: "#123456",
 	},
+
 });
