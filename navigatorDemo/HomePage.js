@@ -28,7 +28,8 @@ export default class HomePage extends React.Component {
 		if (this.props.navigator) {
 			this.props.navigator.push({
 				scene: SecondPage,
-				sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+				title: "第二页",
+				sceneConfig: Navigator.SceneConfigs.PushFromRight,
 				params: {
 					backTitle: "返回上一场景1",
 				},
