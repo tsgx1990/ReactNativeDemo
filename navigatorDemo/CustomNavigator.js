@@ -6,8 +6,11 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 	Text,
-	View
+	View,
+	Dimensions,
 } from "react-native";
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 import HomePage from "./HomePage.js";
 
@@ -30,10 +33,26 @@ export default class CustomNavigator extends React.Component {
 	}
 
 	configureScene(router, routerStack) {
+		var sceneConfig = Navigator.SceneConfigs.PushFromRight;
 		if (router.sceneConfig) {
-			return router.sceneConfig;
+			sceneConfig = router.sceneConfig;
 		}
-		return Navigator.SceneConfigs.PushFromRight;
+
+		// 修改pop手势的行为
+		var popGesture = Object.assign({}, sceneConfig.gestures.pop, {
+			snapVelocity: 0.8,
+			edgeHitWidth: SCREEN_WIDTH / 2.0,
+		});
+
+		// 重置场景切换的部分配置
+		sceneConfig = Object.assign({}, sceneConfig, {
+			springTension: 30, // 控制弹性动画的快慢，值越大，动画越快
+			springFriction: 1,
+			gestures: {
+				pop: popGesture,
+			}
+		});
+		return sceneConfig;
 	}
 
 	renderScene(router, routerStack) {
