@@ -16,7 +16,7 @@ export default class CustomNavigator extends React.Component {
 
 		return (
 			<Navigator 
-			initialRoute = {{scene:HomePage, title: "首页1"}} 
+			initialRoute = {{scene:HomePage, title: "首页1"}}
 			configureScene = {this.configureScene}
 			renderScene = {this.renderScene}
 			navigationBar = {
