@@ -12,7 +12,9 @@ import {
 } from "react-native";
 
 // import Weather from "./weatherDemo/Weather.js";
-import CustomNavigator from "./navigatorDemo/CustomNavigator.js";
+// import CustomNavigator from "./navigatorDemo/CustomNavigator.js";
+
+import MyExperimentalNavigation from "./ExperimentalNavigationDemo/MyExperimentalNavigation.js";
 
 export default class HelloRN extends Component {
 	render() {
@@ -21,10 +23,13 @@ export default class HelloRN extends Component {
 		// 	<Weather />
 		// );
 
-		return (
-			<CustomNavigator />
-		);
+		// return (
+		// 	<CustomNavigator />
+		// );
 
+		return (
+			<MyExperimentalNavigation />
+		);
 	}
 
 }

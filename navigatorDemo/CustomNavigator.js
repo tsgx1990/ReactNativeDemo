@@ -46,8 +46,8 @@ export default class CustomNavigator extends React.Component {
 
 		// 重置场景切换的部分配置
 		sceneConfig = Object.assign({}, sceneConfig, {
-			springTension: 30, // 控制弹性动画的快慢，值越大，动画越快
-			springFriction: 1,
+			springTension: 60, // 控制弹性动画的快慢，值越大，动画越快
+			springFriction: 6,
 			gestures: {
 				pop: popGesture,
 			}

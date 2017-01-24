@@ -4,12 +4,11 @@ import {
 	View,
 	Button,
 	Text,
-	Navigator,
 	Animated,
 } from "react-native";
-import SecondPage from "./SecondPage.js";
+import MyExperSecondPage from "./MyExperSecondPage.js";
 
-export default class HomePage extends React.Component {
+export default class MyExperHomePage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,7 +18,7 @@ export default class HomePage extends React.Component {
 
 	render() {
 
-		var tmp = "下一个个";
+		var tmp = "下一";
 
 		return (
 			<View style={styles.container}> 
@@ -58,26 +57,25 @@ export default class HomePage extends React.Component {
 	}
 
 	pushBtnPressed() {
-		if (this.props.navigator) {
-			this.props.navigator.push({
-				scene: SecondPage,
-				sceneConfig: Navigator.SceneConfigs.PushFromRight,
-				params: {
-					backTitle: "返回上一场景1",
-				},
-				title: "第二页",
-			});
-		}
+		this.props.onPushRoute({
+			key: "MyExperSecondPage",
+			scene: MyExperSecondPage,
+			params: null,
+		});
 	}
 
 }
 
-HomePage.defaultProps = {
-	navigator: null,
+MyExperHomePage.defaultProps = {
+	route: null,
+	onPushRoute() {},
+	onPopRoute() {},
 };
 
-HomePage.propTypes = {
-	navigator: React.PropTypes.object,
+MyExperHomePage.propTypes = {
+	route: React.PropTypes.object,
+	onPushRoute: React.PropTypes.func,
+	onPopRoute: React.PropTypes.func,
 };
 
 const styles = StyleSheet.create({
